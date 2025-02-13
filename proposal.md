@@ -1,1 +1,19 @@
-# DATA 551 - Dashboard Proposal
+# **Proposal** 
+
+## **Motivation and Purpose**
+
+Our target audience is electric vehicle (EV) charging station manufacturers. We are a data science consultancy firm. The dashboard is intended to help manufacturers understand various pieces of information about existing EV charging stations. Our dashboard will include a map that displays 5000 different EV charging stations across the globe. When scrolling over specific stations, the dashboard will display the station’s availability, the average users per day, the station operator, and the cost for users. 
+
+This can be used to help the manufacturers identify potential areas of development to produce more charging stations, or areas that are saturated that could be avoided. The location of the EV charging stations is one of the most vital aspects of their business. Investing in the correct areas that are most in need will help maximize their profits. Additionally, building stations in underserved areas is important for the public to ensure that driving EVs is viable in more areas. 
+
+## **Description of the Data**
+
+Our dataset is publicly available on Kaggle. It contains 5000 rows, with each row pertaining to an EV charging station. Each station has 16 variables associated with it. These include location (latitude, longitude, and address), charger type (AC level 1 and 2, DC fast charger), cost (USD/kWh), availability (hours of operation), distance to city (km), usage stats (average users per day), station operator (company name), charging capacity (kWh), connector types, installation year, reviews (rating out of 5), number of parking spots, and maintenance frequency. 
+
+## **Research Questions and Usage Scenarios**
+
+We are a data science consultancy firm presenting to an EV charging station manufacturer. The manufacturer has hired us so they can better understand the distribution of stations throughout the world in order to determine where they will invest their resources. Through this dashboard, the manufacturer will be able to navigate through different cities, and even different neighbourhoods throughout these cities, to view stations. When scrolling over these stations, they will see various statistics about them such as the hours of operation and cost for consumers. There will also be a separate chart with summary statistics about EV stations based on data filters applied by the user. Together, these pieces of information will help the manufacturer to decide which areas are most in need of more stations, and which are already saturated and should be avoided. They can make this decision by understanding the density of stations, but also specific characteristics of stations in a certain region such as their operating hours. This data is highly valuable for manufacturer decision making, but too large for the manufacturer to simply read and use to make decisions without the dashboard we are creating. 
+
+For example, John works for an EV charging station manufacturer and determines which regions will need further EV charging infrastructure. He wants to be able to [view] all the current EV charging stations and further [explore] certain subregions. He needs to [identify] which regions present the most opportunity for future development. John will log on to the “EV Charging Station App” and see a world map with locations marked for each EV charging station. He can filter the dashboard to show only a specific city. The dashboard will then display how many stations of each connector type are present within the city. This will allow him to understand where there is a need for different connector types. Alternatively, the dashboard can be viewed at a more granular level. After selecting a specific station, the dashboard will display information such as cost and hours of operation. He can use this when planning the implementation of a charging station at a specific location. He can easily view the company’s competitors’ prices and rates in the area, so that they can be best equipped to compete with them or identify a gap in existing services. 
+
+\
