@@ -32,6 +32,7 @@ app.layout = html.Div([
                 ), 
 
                 #slider based on installation year
+                html.H5("Select Installation Year"),
                 dcc.Slider(
                     id='crossfilter-year-slider',
                     min=ev["Installation Year"].min(),
