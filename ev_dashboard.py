@@ -33,12 +33,12 @@ app.layout = html.Div([
 
                 #slider based on installation year
                 html.H5("Select Installation Year"),
-                dcc.Slider(
+                dcc.RangeSlider(
                     id='crossfilter-year-slider',
                     min=ev["Installation Year"].min(),
                     max=ev["Installation Year"].max(),
                     step=1,
-                    value=ev['Installation Year'].max(),
+                    value=[ev["Installation Year"].min(), ev['Installation Year'].max()],
                     marks={str(year): str(year) for year in sorted(ev["Installation Year"].unique())},
                     tooltip={"placement": "bottom", "always_visible": True}
                 ),
@@ -84,7 +84,7 @@ app.layout = html.Div([
     [Input('map', 'relayoutData')]
 )
 
-def update_map(charger_type, year_value, relayoutData):
+def update_map(charger_type, year_range, relayoutData):
 
     #default values for zoom and positioning of map
     zoom = 1
@@ -99,7 +99,7 @@ def update_map(charger_type, year_value, relayoutData):
     fig = go.Figure()
 
     #filter data by installation year based on slider selection
-    filtered_ev = filtered_ev[filtered_ev["Installation Year"] == year_value]
+    filtered_ev = filtered_ev[(filtered_ev["Installation Year"] >= year_range[0]) & (filtered_ev["Installation Year"] <= year_range[1])]
     
     #filter data by charger type based on dropdown selection
     if charger_type != 'All':
