@@ -122,18 +122,16 @@ app.layout = html.Div([
 #callback to update map
 @app.callback(
     [Output('map', 'figure'),
-    Output('table', 'data'),
     Output('avg-cost-table', 'data'),
     Output('avg-parking-table', 'data'),
     Output('avg-reviews-table', 'data'),
     Output('filter-display', 'children')],
     [Input('charger-type-dropdown', 'value'),
     Input('crossfilter-year-slider', 'value'),
-    Input('map', 'relayoutData'),
-    Input('map', 'hoverData')]
+    Input('map', 'relayoutData')]
 )
 
-def update_map_table(charger_type, year_range, relayoutData, hoverData):
+def update_map_table(charger_type, year_range, relayoutData):
 
     #default values for zoom and positioning of map
     zoom = 1
@@ -144,7 +142,6 @@ def update_map_table(charger_type, year_range, relayoutData, hoverData):
         center = relayoutData.get('mapbox.center', center) 
 
     filtered_ev = ev.copy()
-    filtered_ev2 = filtered_ev.copy()
 
 
     #filter data by installation year based on slider selection
@@ -154,21 +151,15 @@ def update_map_table(charger_type, year_range, relayoutData, hoverData):
     if charger_type != 'All':
         filtered_ev = filtered_ev[filtered_ev['Charger Type'] == charger_type]
 
-    
-
-    # If hoverData is provided, filter data to show only the hovered station
-    if hoverData is not None:
-        station_id = hoverData['points'][0]['text']
-        filtered_ev2 = filtered_ev[filtered_ev['Station ID'] == station_id]
 
     fig = go.Figure()
 
     #create map based off filtering
     fig.add_trace(go.Scattermapbox(
-        lat=filtered_ev2["Latitude"],
-        lon=filtered_ev2["Longitude"],
+        lat=filtered_ev["Latitude"],
+        lon=filtered_ev["Longitude"],
         mode='markers+text',
-        text=filtered_ev2['Station ID'],
+        text=filtered_ev['Station ID'],
         marker={'size': 10, 'color': 'red'}
         
     ))
@@ -181,8 +172,6 @@ def update_map_table(charger_type, year_range, relayoutData, hoverData):
             zoom=zoom,
     ),
     )
-    # Update the table with filtered data
-    table_data = filtered_ev2[['Station ID', 'Address', 'Charger Type', 'Availability', 'Cost (USD/kWh)']].to_dict('records')
 
     # Calculate the average cost
     avg_cost = filtered_ev["Cost (USD/kWh)"].mean() if not filtered_ev.empty else 0
@@ -199,7 +188,24 @@ def update_map_table(charger_type, year_range, relayoutData, hoverData):
     # Text to display applied filters
     filter_text = f"Charger Type: {charger_type}, Year Range: {year_range[0]} - {year_range[1]}"
 
-    return fig, table_data, avg_cost_data, avg_parking_data, avg_reviews_data, filter_text
+    return fig, avg_cost_data, avg_parking_data, avg_reviews_data, filter_text
+
+# Callback to update table based on map hover
+@app.callback(
+    Output('table', 'data'),
+    Input('map', 'hoverData')
+)
+def update_table_on_hover(hoverData):
+    if hoverData is None:
+        return ev[['Station ID', 'Address', 'Charger Type', 'Availability', 'Cost (USD/kWh)']].to_dict('records')
+    
+    # Extract the Station ID from hoverData
+    station_id = hoverData['points'][0]['text']
+    
+    # Filter the data to show only the row corresponding to the hovered station
+    filtered_data = ev[ev['Station ID'] == station_id][['Station ID', 'Address', 'Charger Type', 'Availability', 'Cost (USD/kWh)']]
+    
+    return filtered_data.to_dict('records')
 
 
 if __name__ == '__main__':
