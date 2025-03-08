@@ -15,7 +15,11 @@ app = Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
 app.layout = html.Div([
     dbc.Container([
         #Main Title
-        html.H1("EV Chargers Around the World", style={'textAlign': 'center'}),
+        html.H1("EV Chargers Around the World", style={
+            'textAlign': 'center',
+            'fontFamily': 'Arial, sans-serif', #specify a font
+            'marginTop': '30px' #add spacing for cleaner look
+            }),
 
         dbc.Row([
             dbc.Col([
@@ -29,20 +33,31 @@ app.layout = html.Div([
                         {'label': 'Show All Chargers', 'value': 'All'}
                     ],
                     value='All',
-                    style={'width': '100%', 'display': 'inline-block'}
+                    style={
+                        'width': '100%',
+                        'display': 'inline-block',
+                        'borderRadius': '5px', #Round the borders of dropdown menu
+                    }
                 ), 
 
                 #slider based on installation year
-                html.H5("Select Installation Year"),
-                dcc.RangeSlider(
-                    id='crossfilter-year-slider',
-                    min=ev["Installation Year"].min(),
-                    max=ev["Installation Year"].max(),
-                    step=1,
-                    value=[ev["Installation Year"].min(), ev['Installation Year'].max()],
-                    marks={str(year): str(year) for year in sorted(ev["Installation Year"].unique())},
-                    tooltip={"placement": "bottom", "always_visible": True}
+                html.H5("Select Installation Year", style={
+                    'marginTop': '20px',
+                    
+                }),
+                html.Div(
+                    dcc.RangeSlider(
+                        id='crossfilter-year-slider',
+                        min=ev["Installation Year"].min(),
+                        max=ev["Installation Year"].max(),
+                        step=1,
+                        value=[ev["Installation Year"].min(), ev['Installation Year'].max()],
+                        marks={str(year): str(year) for year in sorted(ev["Installation Year"].unique())},
+                        tooltip={"placement": "bottom", "always_visible": True},
+                    ),
+                    style={'marginTop': '20px'}
                 ),
+
 
                 #Displays how the data is being filtered
                 html.H4("Applied Filters", style={'margin-top': '20px'}),
@@ -56,8 +71,9 @@ app.layout = html.Div([
                         {"name": "Average Cost (USD/kWh)", "id": "Average Cost (USD/kWh)"}
                     ],
                     data=[{'Average Cost (USD/kWh)': 0}],
-                    style_cell={'padding': '5px'},
+                    style_cell={'padding': '5px', 'fontFamily': 'Arial, sans-serif'},
                     style_table={'height': 'auto', 'overflowY': 'auto'}, 
+                    style_header={'backgroundColor': 'rgb(230, 230, 230)', 'fontWeight': 'bold'}, #format the header with background color and bold font
                 ),
 
                 # Table for average parking spots
@@ -68,8 +84,9 @@ app.layout = html.Div([
                         {"name": "Average Parking Spots", "id": "Average Parking Spots"}
                     ],
                     data=[{'Average Parking Spots': 0}],
-                    style_cell={'padding': '5px'},
-                    style_table={'height': 'auto', 'overflowY': 'auto'}, 
+                    style_cell={'padding': '5px', 'fontFamily': 'Arial, sans-serif'},
+                    style_table={'height': 'auto', 'overflowY': 'auto'},
+                    style_header={'backgroundColor': 'rgb(230, 230, 230)', 'fontWeight': 'bold'}
                 ),
 
                 # Table for average reviews (ratings)
@@ -80,8 +97,9 @@ app.layout = html.Div([
                         {"name": "Average Reviews (Rating)", "id": "Average Reviews (Rating)"}
                     ],
                     data=[{'Average Reviews (Rating)': 0}],
-                    style_cell={'padding': '5px'},
+                    style_cell={'padding': '5px', 'fontFamily': 'Arial, sans-serif'},
                     style_table={'height': 'auto', 'overflowY': 'auto'}, 
+                    style_header={'backgroundColor': 'rgb(230, 230, 230)', 'fontWeight': 'bold'},
                 ),
                 
             ], md=4, style={'border': '1px solid #d3d3d3', 'border-radius': '10px'}),
@@ -106,19 +124,25 @@ app.layout = html.Div([
                     ],
                     data=ev[['Station ID', 'Address', 'Charger Type', 'Availability', 'Cost (USD/kWh)']].to_dict('records'),
                     page_size=1,
-                    style_cell={'padding': '5px'},
+                    style_cell={'padding': '5px', 'fontFamily': 'Arial, sans-serif'},
                     style_table={'height': 'auto', 'overflowY': 'auto'}, 
                     style_data_conditional=[{
                         'if': {'row_index': 'odd'},
                         'backgroundColor': 'rgb(248, 248, 248)'}],
                      style_header={
                         'backgroundColor': 'rgb(230, 230, 230)',
-                        'fontWeight': 'bold'}
+                        'fontWeight': 'bold'
+                    },
                 ),
-            ], md=8),
+            ], md=8, style={'backgroundColor': 'lightgrey'}),
         ]),
-    ], fluid=True)
-])
+    ], fluid=True),
+],
+style={
+    'backgroundColor': '#BCD4E6',
+    'minHeight': '100vh'
+})
+
 #callback to update map
 @app.callback(
     [Output('map', 'figure'),
@@ -160,7 +184,7 @@ def update_map_table(charger_type, year_range, relayoutData):
         lon=filtered_ev["Longitude"],
         mode='markers+text',
         text=filtered_ev['Station ID'],
-        marker={'size': 10, 'color': 'red'}
+        marker={'size': 10, 'color': 'blue'}
         
     ))
     
