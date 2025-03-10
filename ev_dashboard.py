@@ -16,52 +16,97 @@ app.layout = html.Div([
     dbc.Container([
         #Main Title
         html.H1("EV Chargers Around the World", style={
+            'backgroundColor': 'rgb(230, 230, 230)',
             'textAlign': 'center',
             'fontFamily': 'Arial, sans-serif', #specify a font
-            'marginTop': '30px' #add spacing for cleaner look
+            #'marginTop': '30px', #add spacing for cleaner look
+            'marginBottom': '50px',
+            'font-size': '48px',
+            'padding': '30px'
             }),
 
         dbc.Row([
             dbc.Col([
-                #dropdown for charger type
-                dcc.Dropdown(
-                    id='charger-type-dropdown',
-                    options=[
-                        {'label': 'AC Level 1', 'value': 'AC Level 1'},
-                        {'label': 'AC Level 2', 'value': 'AC Level 2'},
-                        {'label': 'DC Fast Charger', 'value': 'DC Fast Charger'},
-                        {'label': 'Show All Chargers', 'value': 'All'}
-                    ],
-                    value='All',
-                    style={
-                        'width': '100%',
-                        'display': 'inline-block',
-                        'borderRadius': '5px', #Round the borders of dropdown menu
-                    }
-                ), 
+                dbc.Card(
+                    dbc.CardBody([
+                        #dropdown for charger type
+                        dcc.Dropdown(
+                        id='charger-type-dropdown',
+                        options=[
+                            {'label': 'AC Level 1', 'value': 'AC Level 1'},
+                            {'label': 'AC Level 2', 'value': 'AC Level 2'},
+                            {'label': 'DC Fast Charger', 'value': 'DC Fast Charger'},
+                            {'label': 'Show All Chargers', 'value': 'All'}
+                        ],
+                        value='All',
+                        style={
+                            'width': '100%',
+                            'display': 'inline-block',
+                            'borderRadius': '5px', #Round the borders of dropdown menu
+                        }
+                    ), 
 
-                #slider based on installation year
-                html.H5("Select Installation Year", style={
-                    'marginTop': '20px',
+                        #slider based on installation year
+                        html.H5("Select Installation Year", style={
+                            'marginTop': '20px',
                     
-                }),
-                html.Div(
-                    dcc.RangeSlider(
-                        id='crossfilter-year-slider',
-                        min=ev["Installation Year"].min(),
-                        max=ev["Installation Year"].max(),
-                        step=1,
-                        value=[ev["Installation Year"].min(), ev['Installation Year'].max()],
-                        marks={str(year): str(year) for year in sorted(ev["Installation Year"].unique())},
-                        tooltip={"placement": "bottom", "always_visible": True},
-                    ),
-                    style={'marginTop': '20px'}
+                        }),
+                        html.Div(
+                            dcc.RangeSlider(
+                                id='crossfilter-year-slider',
+                                min=ev["Installation Year"].min(),
+                                max=ev["Installation Year"].max(),
+                                step=1,
+                                value=[ev["Installation Year"].min(), ev['Installation Year'].max()],
+                                marks={str(year): str(year) for year in sorted(ev["Installation Year"].unique())},
+                                tooltip={"placement": "bottom", "always_visible": True},
+                            ),
+                        style={'marginTop': '20px', 'marginBottom': '40px'}
+                        ),
+
+
+                    ]),
+                    style={'backgroundColor': 'rgb(230, 230, 230)'}
                 ),
+                # #dropdown for charger type
+                # dcc.Dropdown(
+                #     id='charger-type-dropdown',
+                #     options=[
+                #         {'label': 'AC Level 1', 'value': 'AC Level 1'},
+                #         {'label': 'AC Level 2', 'value': 'AC Level 2'},
+                #         {'label': 'DC Fast Charger', 'value': 'DC Fast Charger'},
+                #         {'label': 'Show All Chargers', 'value': 'All'}
+                #     ],
+                #     value='All',
+                #     style={
+                #         'width': '100%',
+                #         'display': 'inline-block',
+                #         'borderRadius': '5px', #Round the borders of dropdown menu
+                #     }
+                # ), 
+
+                # #slider based on installation year
+                # html.H5("Select Installation Year", style={
+                #     'marginTop': '20px',
+                    
+                # }),
+                # html.Div(
+                #     dcc.RangeSlider(
+                #         id='crossfilter-year-slider',
+                #         min=ev["Installation Year"].min(),
+                #         max=ev["Installation Year"].max(),
+                #         step=1,
+                #         value=[ev["Installation Year"].min(), ev['Installation Year'].max()],
+                #         marks={str(year): str(year) for year in sorted(ev["Installation Year"].unique())},
+                #         tooltip={"placement": "bottom", "always_visible": True},
+                #     ),
+                #     style={'marginTop': '20px', 'marginBottom': '40px'}
+                # ),
 
 
                 #Displays how the data is being filtered
-                html.H4("Applied Filters", style={'margin-top': '20px'}),
-                html.Div(id='filter-display', style={'fontSize': '16px', 'color': 'black', 'marginTop': '10px'}),
+                html.H5("Applied Filters", style={'margin-top': '20px'}),
+                html.Div(id='filter-display', style={'fontSize': '16px', 'color': 'black', 'marginTop': '10px', 'marginBottom': '50px'}),
                 
                  # Table for average cost
                 html.H4("Average Cost (USD/kWh)", style={'margin-top': '20px'}),
@@ -110,7 +155,7 @@ app.layout = html.Div([
                 dcc.Graph(
                     id='map',
                     config={'scrollZoom': True},
-                    style={'height': '70vh','width': '100%'}
+                    style={'height': '60vh','width': '100%', 'marginBottom': '30px'}
                 ),
                 #Table for Hover data
                 dash_table.DataTable(
@@ -131,10 +176,11 @@ app.layout = html.Div([
                         'backgroundColor': 'rgb(248, 248, 248)'}],
                      style_header={
                         'backgroundColor': 'rgb(230, 230, 230)',
-                        'fontWeight': 'bold'
+                        'fontWeight': 'bold',
+
                     },
                 ),
-            ], md=8, style={'backgroundColor': 'lightgrey'}),
+            ], md=8, style={'backgroundColor': '#BCD4E6'}),
         ]),
     ], fluid=True),
 ],
@@ -189,6 +235,13 @@ def update_map_table(charger_type, year_range, relayoutData):
     ))
     
     fig.update_layout(
+        margin=dict(
+        l=20,  
+        r=20,  
+        t=20,  
+        b=20   
+        ),
+        paper_bgcolor="rgb(230, 230, 230)",
         mapbox_style="open-street-map",  
         mapbox=dict(
             accesstoken="AIzaSyDmLCWxhqJteqUEpSStBLKm2r4oQPfHg4o",
