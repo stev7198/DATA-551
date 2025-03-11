@@ -104,48 +104,105 @@ app.layout = html.Div([
                 # ),
 
 
+
                 #Displays how the data is being filtered
-                html.H5("Applied Filters", style={'margin-top': '20px'}),
+                html.H5("Applied Filters", style={'margin-top': '50px'}),
                 html.Div(id='filter-display', style={'fontSize': '16px', 'color': 'black', 'marginTop': '10px', 'marginBottom': '50px'}),
                 
-                 # Table for average cost
-                html.H4("Average Cost (USD/kWh)", style={'margin-top': '20px'}),
-                dash_table.DataTable(
-                    id='avg-cost-table',
-                    columns=[
-                        {"name": "Average Cost (USD/kWh)", "id": "Average Cost (USD/kWh)"}
-                    ],
-                    data=[{'Average Cost (USD/kWh)': 0}],
-                    style_cell={'padding': '5px', 'fontFamily': 'Arial, sans-serif'},
-                    style_table={'height': 'auto', 'overflowY': 'auto'}, 
-                    style_header={'backgroundColor': 'rgb(230, 230, 230)', 'fontWeight': 'bold'}, #format the header with background color and bold font
-                ),
+                dbc.Row([
+                    dbc.Col([
+                        #table for average cost
+                        dash_table.DataTable(
+                            id='avg-cost-table',
+                            columns=[
+                                {"name": "Average Cost (USD/kWh)", "id": "Average Cost (USD/kWh)"}
+                            ],
+                            data=[{'Average Cost (USD/kWh)': 0}],
+                            style_cell={'height': '50px','padding': '5px', 'fontFamily': 'Arial, sans-serif'},
+                            style_table={'height': 'auto', 'marginBottom': '30px'}, 
+                            style_header={'backgroundColor': 'rgb(230, 230, 230)', 'fontWeight': 'bold'}, #format the header with background color and bold font
+                        ),
+                        
+                        # Table for average parking spots
+                        dash_table.DataTable(
+                            id='avg-parking-table',
+                            columns=[
+                                {"name": "Average Parking Spots", "id": "Average Parking Spots"}
+                            ],
+                            data=[{'Average Parking Spots': 0}],
+                            style_cell={'height': '50px','padding': '5px', 'fontFamily': 'Arial, sans-serif'},
+                            style_table={'height': 'auto', 'overflowY': 'auto'},
+                            style_header={'backgroundColor': 'rgb(230, 230, 230)', 'fontWeight': 'bold'}
+                        ),
+                    ]),
 
-                # Table for average parking spots
-                html.H4("Average Parking Spots", style={'margin-top': '20px'}),
-                dash_table.DataTable(
-                    id='avg-parking-table',
-                    columns=[
-                        {"name": "Average Parking Spots", "id": "Average Parking Spots"}
-                    ],
-                    data=[{'Average Parking Spots': 0}],
-                    style_cell={'padding': '5px', 'fontFamily': 'Arial, sans-serif'},
-                    style_table={'height': 'auto', 'overflowY': 'auto'},
-                    style_header={'backgroundColor': 'rgb(230, 230, 230)', 'fontWeight': 'bold'}
-                ),
+                    dbc.Col([
+                         # Table for average reviews (ratings)
+                        dash_table.DataTable(
+                            id='avg-reviews-table',
+                            columns=[
+                                {"name": "Average Reviews (Rating)", "id": "Average Reviews (Rating)"}
+                            ],
+                            data=[{'Average Reviews (Rating)': 0}],
+                            style_cell={'height': '50px','padding': '5px', 'fontFamily': 'Arial, sans-serif'},
+                            style_table={'height': 'auto', 'marginBottom': '30px'}, 
+                            style_header={'backgroundColor': 'rgb(230, 230, 230)', 'fontWeight': 'bold'},
+                        ),
 
-                # Table for average reviews (ratings)
-                html.H4("Average Reviews (Rating)", style={'margin-top': '20px'}),
-                dash_table.DataTable(
-                    id='avg-reviews-table',
-                    columns=[
-                        {"name": "Average Reviews (Rating)", "id": "Average Reviews (Rating)"}
-                    ],
-                    data=[{'Average Reviews (Rating)': 0}],
-                    style_cell={'padding': '5px', 'fontFamily': 'Arial, sans-serif'},
-                    style_table={'height': 'auto', 'overflowY': 'auto'}, 
-                    style_header={'backgroundColor': 'rgb(230, 230, 230)', 'fontWeight': 'bold'},
-                ),
+                        #table for total chargers
+                        dash_table.DataTable(
+                            id='total-chargers-table',
+                            columns=[
+                                {"name": "Total Chargers", "id": "Total Chargers"}
+                            ],
+                            data=[{'Total Chargers': 0}],
+                            style_cell={'height': '50px','padding': '5px', 'fontFamily': 'Arial, sans-serif'},
+                            style_table={'height': 'auto', 'overflowY': 'auto'}, 
+                            style_header={'backgroundColor': 'rgb(230, 230, 230)', 'fontWeight': 'bold'},
+                        ),
+
+                    ]),
+
+                ]),
+
+            #      # Table for average cost
+            #     html.H4("Average Cost (USD/kWh)", style={'margin-top': '20px'}),
+            #     dash_table.DataTable(
+            #         id='avg-cost-table',
+            #         columns=[
+            #             {"name": "Average Cost (USD/kWh)", "id": "Average Cost (USD/kWh)"}
+            #         ],
+            #         data=[{'Average Cost (USD/kWh)': 0}],
+            #         style_cell={'padding': '5px', 'fontFamily': 'Arial, sans-serif'},
+            #         style_table={'height': 'auto', 'overflowY': 'auto'}, 
+            #         style_header={'backgroundColor': 'rgb(230, 230, 230)', 'fontWeight': 'bold'}, #format the header with background color and bold font
+            #     ),
+
+            #     # Table for average parking spots
+            #     html.H4("Average Parking Spots", style={'margin-top': '20px'}),
+            #     dash_table.DataTable(
+            #         id='avg-parking-table',
+            #         columns=[
+            #             {"name": "Average Parking Spots", "id": "Average Parking Spots"}
+            #         ],
+            #         data=[{'Average Parking Spots': 0}],
+            #         style_cell={'padding': '5px', 'fontFamily': 'Arial, sans-serif'},
+            #         style_table={'height': 'auto', 'overflowY': 'auto'},
+            #         style_header={'backgroundColor': 'rgb(230, 230, 230)', 'fontWeight': 'bold'}
+            #     ),
+
+            #     # Table for average reviews (ratings)
+            #     html.H4("Average Reviews (Rating)", style={'margin-top': '20px'}),
+            #     dash_table.DataTable(
+            #         id='avg-reviews-table',
+            #         columns=[
+            #             {"name": "Average Reviews (Rating)", "id": "Average Reviews (Rating)"}
+            #         ],
+            #         data=[{'Average Reviews (Rating)': 0}],
+            #         style_cell={'padding': '5px', 'fontFamily': 'Arial, sans-serif'},
+            #         style_table={'height': 'auto', 'overflowY': 'auto'}, 
+            #         style_header={'backgroundColor': 'rgb(230, 230, 230)', 'fontWeight': 'bold'},
+            #     ),
                 
             ], md=4, style={'border': '1px solid #d3d3d3', 'border-radius': '10px'}),
 
@@ -195,6 +252,7 @@ style={
     Output('avg-cost-table', 'data'),
     Output('avg-parking-table', 'data'),
     Output('avg-reviews-table', 'data'),
+    Output('total-chargers-table', 'data'),
     Output('filter-display', 'children')],
     [Input('charger-type-dropdown', 'value'),
     Input('crossfilter-year-slider', 'value'),
@@ -252,20 +310,24 @@ def update_map_table(charger_type, year_range, relayoutData):
 
     # Calculate the average cost
     avg_cost = filtered_ev["Cost (USD/kWh)"].mean() if not filtered_ev.empty else 0
-    avg_cost_data = [{'Average Cost (USD/kWh)': avg_cost}]
+    avg_cost_data = [{'Average Cost (USD/kWh)': round(avg_cost, 4)}]
 
     # Calculate the average parking spots
     avg_parking_spots = filtered_ev["Parking Spots"].mean() if not filtered_ev.empty else 0
-    avg_parking_data = [{'Average Parking Spots': avg_parking_spots}]
+    avg_parking_data = [{'Average Parking Spots': round(avg_parking_spots, 1)}]
 
     # Calculate the average reviews rating
     avg_reviews = filtered_ev["Reviews (Rating)"].mean() if not filtered_ev.empty else 0
-    avg_reviews_data = [{'Average Reviews (Rating)': avg_reviews}]
+    avg_reviews_data = [{'Average Reviews (Rating)': round(avg_reviews, 2)}]
+
+    #calculate total chargers
+    total_chargers = filtered_ev.shape[0] if not filtered_ev.empty else 0
+    total_chargers_data = [{'Total Chargers': total_chargers}]
 
     # Text to display applied filters
     filter_text = f"Charger Type: {charger_type}, Year Range: {year_range[0]} - {year_range[1]}"
 
-    return fig, avg_cost_data, avg_parking_data, avg_reviews_data, filter_text
+    return fig, avg_cost_data, avg_parking_data, avg_reviews_data, total_chargers_data, filter_text
 
 # Callback to update table based on map hover
 @app.callback(
