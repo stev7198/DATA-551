@@ -14,16 +14,29 @@ app = Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
 
 app.layout = html.Div([
     dbc.Container([
-        #Main Title
-        html.H1("EV Chargers Around the World", style={
-            'backgroundColor': 'rgb(230, 230, 230)',
-            'textAlign': 'center',
-            'fontFamily': 'Arial, sans-serif', #specify a font
-            #'marginTop': '30px', #add spacing for cleaner look
-            'marginBottom': '50px',
-            'font-size': '48px',
-            'padding': '30px'
+
+        #container for title and subtitle
+        html.Div([
+            html.H1("GLOBAL EV CHARGING INFRASTRUCTURE", style={
+                'textAlign': 'center',
+                'fontFamily': 'Arial, sans-serif',
+                'fontSize': '48px',
+                'padding': '5px',
             }),
+
+            html.P("Visualizing location and features of electric vehicle charging infrastructure in 15 cities, with key summary statistics of important manufacturer information.", style={
+                'textAlign': 'center',
+                'fontFamily': 'Arial, sans-serif',
+                'fontSize': '16px',
+                'color': 'rgb(100, 100, 100)',
+            })
+        ], style={
+            'backgroundColor': 'rgb(230, 230, 230)',  
+            'textAlign': 'center',
+            'fontFamily': 'Arial, sans-serif',
+            'padding': '20px',  
+            'marginBottom': '50px'  
+        }),
 
         dbc.Row([
             dbc.Col([
@@ -61,53 +74,23 @@ app.layout = html.Div([
                                 marks={str(year): str(year) for year in sorted(ev["Installation Year"].unique())},
                                 tooltip={"placement": "bottom", "always_visible": True},
                             ),
-                        style={'marginTop': '20px', 'marginBottom': '40px'}
+                        style={'marginTop': '20px'}
                         ),
 
 
                     ]),
-                    style={'backgroundColor': 'rgb(230, 230, 230)'}
+                    style={'backgroundColor': 'rgb(230, 230, 230)', 'marginBottom': '50px'}
                 ),
-                # #dropdown for charger type
-                # dcc.Dropdown(
-                #     id='charger-type-dropdown',
-                #     options=[
-                #         {'label': 'AC Level 1', 'value': 'AC Level 1'},
-                #         {'label': 'AC Level 2', 'value': 'AC Level 2'},
-                #         {'label': 'DC Fast Charger', 'value': 'DC Fast Charger'},
-                #         {'label': 'Show All Chargers', 'value': 'All'}
-                #     ],
-                #     value='All',
-                #     style={
-                #         'width': '100%',
-                #         'display': 'inline-block',
-                #         'borderRadius': '5px', #Round the borders of dropdown menu
-                #     }
-                # ), 
 
-                # #slider based on installation year
-                # html.H5("Select Installation Year", style={
-                #     'marginTop': '20px',
-                    
-                # }),
-                # html.Div(
-                #     dcc.RangeSlider(
-                #         id='crossfilter-year-slider',
-                #         min=ev["Installation Year"].min(),
-                #         max=ev["Installation Year"].max(),
-                #         step=1,
-                #         value=[ev["Installation Year"].min(), ev['Installation Year'].max()],
-                #         marks={str(year): str(year) for year in sorted(ev["Installation Year"].unique())},
-                #         tooltip={"placement": "bottom", "always_visible": True},
-                #     ),
-                #     style={'marginTop': '20px', 'marginBottom': '40px'}
-                # ),
+                #displays how data is being filtered
+                dbc.Card(
+                    dbc.CardBody([
+                        html.H5("Applied Filters", style={'margin-top': '10px'}),
+                        html.Div(id='filter-display', style={'fontSize': '16px', 'color': 'black', 'marginTop': '10px', 'marginBottom': '10px'}),
 
-
-
-                #Displays how the data is being filtered
-                html.H5("Applied Filters", style={'margin-top': '50px'}),
-                html.Div(id='filter-display', style={'fontSize': '16px', 'color': 'black', 'marginTop': '10px', 'marginBottom': '50px'}),
+                    ]),
+                    style={'backgroundColor': 'rgb(230, 230, 230)', 'marginBottom': '50px'}
+                ),
                 
                 dbc.Row([
                     dbc.Col([
@@ -163,47 +146,7 @@ app.layout = html.Div([
 
                     ]),
 
-                ]),
-
-            #      # Table for average cost
-            #     html.H4("Average Cost (USD/kWh)", style={'margin-top': '20px'}),
-            #     dash_table.DataTable(
-            #         id='avg-cost-table',
-            #         columns=[
-            #             {"name": "Average Cost (USD/kWh)", "id": "Average Cost (USD/kWh)"}
-            #         ],
-            #         data=[{'Average Cost (USD/kWh)': 0}],
-            #         style_cell={'padding': '5px', 'fontFamily': 'Arial, sans-serif'},
-            #         style_table={'height': 'auto', 'overflowY': 'auto'}, 
-            #         style_header={'backgroundColor': 'rgb(230, 230, 230)', 'fontWeight': 'bold'}, #format the header with background color and bold font
-            #     ),
-
-            #     # Table for average parking spots
-            #     html.H4("Average Parking Spots", style={'margin-top': '20px'}),
-            #     dash_table.DataTable(
-            #         id='avg-parking-table',
-            #         columns=[
-            #             {"name": "Average Parking Spots", "id": "Average Parking Spots"}
-            #         ],
-            #         data=[{'Average Parking Spots': 0}],
-            #         style_cell={'padding': '5px', 'fontFamily': 'Arial, sans-serif'},
-            #         style_table={'height': 'auto', 'overflowY': 'auto'},
-            #         style_header={'backgroundColor': 'rgb(230, 230, 230)', 'fontWeight': 'bold'}
-            #     ),
-
-            #     # Table for average reviews (ratings)
-            #     html.H4("Average Reviews (Rating)", style={'margin-top': '20px'}),
-            #     dash_table.DataTable(
-            #         id='avg-reviews-table',
-            #         columns=[
-            #             {"name": "Average Reviews (Rating)", "id": "Average Reviews (Rating)"}
-            #         ],
-            #         data=[{'Average Reviews (Rating)': 0}],
-            #         style_cell={'padding': '5px', 'fontFamily': 'Arial, sans-serif'},
-            #         style_table={'height': 'auto', 'overflowY': 'auto'}, 
-            #         style_header={'backgroundColor': 'rgb(230, 230, 230)', 'fontWeight': 'bold'},
-            #     ),
-                
+                ]),            
             ], md=4, style={'border': '1px solid #d3d3d3', 'border-radius': '10px'}),
 
 
@@ -212,7 +155,7 @@ app.layout = html.Div([
                 dcc.Graph(
                     id='map',
                     config={'scrollZoom': True},
-                    style={'height': '60vh','width': '100%', 'marginBottom': '30px'}
+                    style={'height': '54vh','width': '100%', 'marginBottom': '30px'}
                 ),
                 #Table for Hover data
                 dash_table.DataTable(
@@ -226,7 +169,7 @@ app.layout = html.Div([
                     ],
                     data=ev[['Station ID', 'Address', 'Charger Type', 'Availability', 'Cost (USD/kWh)']].to_dict('records'),
                     page_size=1,
-                    style_cell={'padding': '5px', 'fontFamily': 'Arial, sans-serif'},
+                    style_cell={'height': '40px', 'padding': '5px', 'fontFamily': 'Arial, sans-serif'},
                     style_table={'height': 'auto', 'overflowY': 'auto'}, 
                     style_data_conditional=[{
                         'if': {'row_index': 'odd'},
@@ -265,12 +208,12 @@ def update_map_table(charger_type, year_range, relayoutData):
     zoom = 1
     center = {'lat': 0, 'lon': 0}
 
+    #prevents map from resetting each time filter is apllied
     if relayoutData is not None:
         zoom = relayoutData.get('mapbox.zoom', zoom)  
         center = relayoutData.get('mapbox.center', center) 
 
     filtered_ev = ev.copy()
-
 
     #filter data by installation year based on slider selection
     filtered_ev = filtered_ev[(filtered_ev["Installation Year"] >= year_range[0]) & (filtered_ev["Installation Year"] <= year_range[1])]
@@ -279,6 +222,12 @@ def update_map_table(charger_type, year_range, relayoutData):
     if charger_type != 'All':
         filtered_ev = filtered_ev[filtered_ev['Charger Type'] == charger_type]
 
+    #different colors for charger type
+    charger_type_colors = {
+        'AC Level 1': 'green',
+        'AC Level 2': 'red',
+        'DC Fast Charger': 'blue'
+    }
 
     fig = go.Figure()
 
@@ -288,7 +237,7 @@ def update_map_table(charger_type, year_range, relayoutData):
         lon=filtered_ev["Longitude"],
         mode='markers+text',
         text=filtered_ev['Station ID'],
-        marker={'size': 10, 'color': 'blue'}
+        marker={'size': 10, 'color': filtered_ev['Charger Type'].map(charger_type_colors)}
         
     ))
     
