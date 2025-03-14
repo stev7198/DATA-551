@@ -165,9 +165,11 @@ app.layout = html.Div([
                         {"name": "Address", "id": "Address"},
                         {"name": "Charger Type", "id": "Charger Type"},
                         {"name": "Availability", "id": "Availability"},
-                        {"name": "Cost (USD/kWh)", "id": "Cost (USD/kWh)"}
+                        {"name": "Cost (USD/kWh)", "id": "Cost (USD/kWh)"},
+                        {"name": "Avg Users/day", "id": "Usage Stats (avg users/day)"},
+                        {"name": "Parking Spots", "id": "Parking Spots"}
                     ],
-                    data=ev[['Station ID', 'Address', 'Charger Type', 'Availability', 'Cost (USD/kWh)']].to_dict('records'),
+                    data=ev[['Station ID', 'Address', 'Charger Type', 'Availability', 'Cost (USD/kWh)', 'Parking Spots']].to_dict('records'),
                     page_size=1,
                     style_cell={'height': '40px', 'padding': '5px', 'fontFamily': 'Arial, sans-serif'},
                     style_table={'height': 'auto', 'overflowY': 'auto'}, 
@@ -285,13 +287,27 @@ def update_map_table(charger_type, year_range, relayoutData):
 )
 def update_table_on_hover(hoverData):
     if hoverData is None:
-        return ev[['Station ID', 'Address', 'Charger Type', 'Availability', 'Cost (USD/kWh)']].to_dict('records')
+        return ev[['Station ID', 
+                   'Address', 
+                   'Charger Type', 
+                   'Availability', 
+                   'Cost (USD/kWh)', 
+                   'Parking Spots', 
+                   'Usage Stats (avg users/day)', 
+                   'Connector Types']].to_dict('records')
     
     # Extract the Station ID from hoverData
     station_id = hoverData['points'][0]['text']
     
     # Filter the data to show only the row corresponding to the hovered station
-    filtered_data = ev[ev['Station ID'] == station_id][['Station ID', 'Address', 'Charger Type', 'Availability', 'Cost (USD/kWh)']]
+    filtered_data = ev[ev['Station ID'] == station_id][['Station ID', 
+                                                        'Address', 
+                                                        'Charger Type', 
+                                                        'Availability', 
+                                                        'Cost (USD/kWh)', 
+                                                        'Parking Spots', 
+                                                        'Usage Stats (avg users/day)', 
+                                                        'Connector Types']]
     
     return filtered_data.to_dict('records')
 
