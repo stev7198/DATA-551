@@ -2,7 +2,7 @@
 
 ### Feedback and Final Changes
 
-We have finalized our dashboard and implemented everything in our initial proposal. Some changes were made to the exact specifics, like how we were going to filter the data and what information we wanted to display. All of our choices were made with our audience in mind, electric vehicle charging manufacturers, and what information they would want to search for and want displayed. 
+We have finalized our dashboard and implemented everything in our initial proposal. Some changes were made to the exact specifics, like how we were going to filter the data and what information we wanted to display. All of our choices were made with our audience, electric vehicle charging manufacturers, in mind, and what information they would want to search for and have displayed. 
 
 For example, filtering by charger type allows the manufacturer to see what type of chargers are concentrated in a certain area, and if there is a need for development of a certain type. This also allows for displaying key averages like number of parking spots or cost amongst all these chargers, which users can then compare individual stations to with the hover tooltip. The table that populates when hovering over a station also gives users direct information about that station. The stations are also color coded by charger type on the map for easy comparison. Filtering by year provides insight on changes and trends in certain metrics of stations. 
 
