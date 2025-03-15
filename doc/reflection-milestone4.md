@@ -1,0 +1,13 @@
+## Milestone 4 Reflection
+
+### Feedback and Final Changes
+
+We have finalized our dashboard and implemented everything in our initial proposal. Some changes were made to the exact specifics, like how we were going to filter the data and what information we wanted to display. All of our choices were made with our audience in mind, electric vehicle charging manufacturers, and what information they would want to search for and want displayed. 
+
+For example, filtering by charger type allows the manufacturer to see what type of chargers are concentrated in a certain area, and if there is a need for development of a certain type. This also allows for displaying key averages like number of parking spots or cost amongst all these chargers, which users can then compare individual stations to with the hover tooltip. The table that populates when hovering over a station also gives users direct information about that station. The stations are also color coded by charger type on the map for easy comparison. Filtering by year provides insight on changes and trends in certain metrics of stations. 
+
+The hover table highlights important information that a manufacturer would be interested in. If all of the  stations in an area have limited availability, or only one type of charger this highlights a potential gap in service. We focused on displaying the key information: station ID, address, charger type, hours of availability, cost, average users per day, and number of parking spots. We initially had fewer columns in the hover table for the sake of simplicity, but after some testing, we saw that we could add more columns to make the chart more informative without making the dashboard too cluttered. 
+
+A recurring theme with our feedback was to improve usability of certain features like the slider, and a lack of understanding of how information was displayed. One of the most useful pieces of advice was to alter the slider to include multiple years, instead of just one year. We tackled this by adjusting the slider to filter based on year ranges. We also changed our title to be more descriptive, to ensure it was clear what our dashboard is visualizing. 
+
+We updated the styling of the app by putting each component in its own panel to make it cleaner and easier for the user to understand. There are prompts for the dropdown and slider, making it user friendly. The map is the main feature, so we made sure that it got adequate space on our dashboard. In summary, after many iterations, we feel that our dashboard is intuitive and informative, and would be useful for developers looking to identify gaps in the EV charging station market and develop new stations. 
