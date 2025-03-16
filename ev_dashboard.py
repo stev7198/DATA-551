@@ -10,7 +10,7 @@ import pandas as pd
 ev = pd.read_csv("ev_charging_stations.csv")
 ev = ev[~ev['Address'].str.contains('Random Rd', case=False)]
 
-app = Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
+app = Dash(__name__, title='GLOBAL EV CHARGING INFRASTRUCTURE', external_stylesheets=[dbc.themes.BOOTSTRAP])
 
 app.layout = html.Div([
     dbc.Container([
