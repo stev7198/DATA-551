@@ -10,7 +10,7 @@ import pandas as pd
 ev = pd.read_csv("ev_charging_stations.csv")
 ev = ev[~ev['Address'].str.contains('Random Rd', case=False)]
 
-app = Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
+app = Dash(__name__, title='GLOBAL EV CHARGING INFRASTRUCTURE', external_stylesheets=[dbc.themes.BOOTSTRAP])
 
 app.layout = html.Div([
     dbc.Container([
@@ -24,7 +24,9 @@ app.layout = html.Div([
                 'padding': '5px',
             }),
 
-            html.P("Visualizing location and features of electric vehicle charging infrastructure in 15 cities, with key summary statistics of important manufacturer information.", style={
+            html.P("Visualizing location and features of electric vehicle charging infrastructure in 15 major cities. "
+            "Filter by year and/or charger type and anaylze key manufacturing information of individual stations. "
+            "Summary statistics displayed for easy comparison of filtered data.", style={
                 'textAlign': 'center',
                 'fontFamily': 'Arial, sans-serif',
                 'fontSize': '16px',
@@ -34,7 +36,7 @@ app.layout = html.Div([
             'backgroundColor': 'rgb(230, 230, 230)',  
             'textAlign': 'center',
             'fontFamily': 'Arial, sans-serif',
-            'padding': '20px',  
+            'padding': '35px',  
             'marginBottom': '50px'  
         }),
 
@@ -162,14 +164,16 @@ app.layout = html.Div([
                     id='table',
                     columns=[
                         {"name": "Station ID", "id": "Station ID"},
-                        {"name": "Address", "id": "Address"},
+                        #{"name": "Address", "id": "Address"},
                         {"name": "Charger Type", "id": "Charger Type"},
+                        {"name": "Charging Capacity (kW)", "id": "Charging Capacity (kW)"},
                         {"name": "Availability", "id": "Availability"},
                         {"name": "Cost (USD/kWh)", "id": "Cost (USD/kWh)"},
                         {"name": "Avg Users/day", "id": "Usage Stats (avg users/day)"},
-                        {"name": "Parking Spots", "id": "Parking Spots"}
+                        {"name": "Parking Spots", "id": "Parking Spots"},
+                        {"name": "Review", "id": "Reviews (Rating)"}
                     ],
-                    data=ev[['Station ID', 'Address', 'Charger Type', 'Availability', 'Cost (USD/kWh)', 'Parking Spots']].to_dict('records'),
+                    data=ev[['Station ID', 'Charger Type', "Charging Capacity (kW)", 'Availability', 'Cost (USD/kWh)', 'Parking Spots', "Usage Stats (avg users/day)", "Reviews (Rating)"]].to_dict('records'),
                     page_size=1,
                     style_cell={'height': '40px', 'padding': '5px', 'fontFamily': 'Arial, sans-serif'},
                     style_table={'height': 'auto', 'overflowY': 'auto'}, 
@@ -182,12 +186,12 @@ app.layout = html.Div([
 
                     },
                 ),
-            ], md=8, style={'backgroundColor': '#BCD4E6'}),
+            ], md=8, style={'backgroundColor': '#B3D9E6'}),  #BCD4E6
         ]),
     ], fluid=True),
 ],
 style={
-    'backgroundColor': '#BCD4E6',
+    'backgroundColor': '#B3D9E6',
     'minHeight': '100vh'
 })
 
@@ -288,29 +292,31 @@ def update_map_table(charger_type, year_range, relayoutData):
 def update_table_on_hover(hoverData):
     if hoverData is None:
         return ev[['Station ID', 
-                   'Address', 
-                   'Charger Type', 
+                   #'Address', 
+                   'Charger Type',
+                   "Charging Capacity (kW)", 
                    'Availability', 
                    'Cost (USD/kWh)', 
                    'Parking Spots', 
-                   'Usage Stats (avg users/day)', 
-                   'Connector Types']].to_dict('records')
+                   'Usage Stats (avg users/day)',
+                   'Reviews (Rating)']].to_dict('records')
     
     # Extract the Station ID from hoverData
     station_id = hoverData['points'][0]['text']
     
     # Filter the data to show only the row corresponding to the hovered station
     filtered_data = ev[ev['Station ID'] == station_id][['Station ID', 
-                                                        'Address', 
+                                                        #'Address', 
                                                         'Charger Type', 
                                                         'Availability', 
-                                                        'Cost (USD/kWh)', 
+                                                        'Cost (USD/kWh)',
+                                                        "Charging Capacity (kW)", 
                                                         'Parking Spots', 
                                                         'Usage Stats (avg users/day)', 
-                                                        'Connector Types']]
+                                                        'Reviews (Rating)']]
     
     return filtered_data.to_dict('records')
 
 
 if __name__ == '__main__':
-    app.run_server(debug=True)
+    app.run_server(debug=False)
